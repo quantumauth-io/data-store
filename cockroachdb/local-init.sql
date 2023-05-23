@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS wall_signatures;
+CREATE USER IF NOT EXISTS idfi_app;
+GRANT ALL ON DATABASE wall_signatures TO idfi_app WITH GRANT OPTION;
