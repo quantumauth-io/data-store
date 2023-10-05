@@ -19,8 +19,17 @@ services:
       resources:
         limits:
           memory: 512M
+  hardhat-node:
+    image: 'hardhat'
+    build:
+      context: ./hardhat
+      dockerfile: Dockerfile
+    ports:
+      - "8545:8545"
+
 networks:
   default:
     name: mid-network
     external: true
+
 
