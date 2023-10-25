@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+        ETHERSCAN_API_KEY: '${{ secrets.ETHERSCAN_API_KEY }}'
+        OWNER_PRIVATE_KEY: '${{ secrets.OWNER_PRIVATE_KEY }}'
+        RPC: '${{ secrets.RPC}}'
+        VALIDATOR_PRIVATE_KEY: '${{ secrets.VALIDATOR_PRIVATE_KEY }}'
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install packages
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - run: yarn --ignore-scripts
+        shell: bash
+      - name: Start Hardhat node
+        run: yarn hardhat node &
+      - name: Wait for Hardhat node to start
+        run: sleep 10
+      - name: Deploy
+        run: yarn hardhat deploy-www3
+      - name: Run Tests
+        run: yarn hardhat test
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+

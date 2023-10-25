@@ -12,6 +12,12 @@ Create the containers to work on the project locally
 2. Create a network : 
 3. `docker network create --subnet 192.168.32.0/24 mid-network`
 
+### Update submodules
+```git submodule init```
+
+```git submodule update```
+
+```git submodule update --init --recursive```
 
 ### To Launch
 
