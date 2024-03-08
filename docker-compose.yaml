@@ -56,7 +56,7 @@ services:
 
 networks:
   default:
-    name: mid-network
+    name: idecentralize-network
     external: true
 
 
