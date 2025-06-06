@@ -10,7 +10,7 @@ Build the data store for the application.
 
 1. Install Docker Desktop
 2. Create a network : 
-3. `docker network create --subnet 192.168.42.0/24 idecentralize-network`
+3. `docker network create --subnet 192.168.42.0/24 yetistudio-network`
 
 ### Update submodules
 ```git submodule init```
