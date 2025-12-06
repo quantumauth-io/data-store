@@ -8,7 +8,7 @@
 1. Install Docker
 2. Create a network
 ``` bash
-   docker network create quantumauth-network
+docker network create quantumauth-network
    ```
 
 ### To Launch
