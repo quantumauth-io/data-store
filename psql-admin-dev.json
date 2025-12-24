@@ -1,0 +1,32 @@
+{
+  "family": "psql-admin-dev",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::916055948674:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "psql",
+      "image": "postgres:15",
+      "essential": true,
+      "environment": [
+        { "name": "PGPASSWORD", "value": "Exby1979$" }
+      ],
+      "command": [
+        "sh",
+        "-lc",
+        "psql \"host=quantumauth-db-dev.cluster-cv8sqeayens4.us-east-2.rds.amazonaws.com user=qa_admin dbname=postgres sslmode=require\" -c 'CREATE DATABASE \"quantumauth-db\";'"
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/psql-admin-dev",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-create-group": "true"
+        }
+      }
+    }
+  ]
+}
