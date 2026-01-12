@@ -1,0 +1,3 @@
+[submodule "docker/foundry/contracts"]
+	path = docker/foundry/contracts
+	url = git@github.com:quantumauth-io/quantum-auth-contracts.git
