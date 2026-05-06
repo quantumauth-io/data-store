@@ -1,26 +1,12 @@
 volumes:
-#  cockroachdb-data:
   qa_pg_data:
 
 services:
-#  cockroachdb:
-#    image: cockroachdb/cockroach:v25.2.0
-#    ports:
-#      - '26257:26257'
-#      - '18080:18080'
-#    entrypoint: /opt/cockroachdb/startup.sh
-#    volumes:
-#      - cockroachdb-data:/cockroach/cockroach-data
-#      - ./cockroachdb:/opt/cockroachdb
-#    restart: always
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 512M
 
   postgres:
     image: postgres:16
     container_name: qa-postgres
+    restart: unless-stopped
     environment:
       POSTGRES_USER: qa
       POSTGRES_PASSWORD: qa
@@ -35,6 +21,52 @@ services:
       interval: 5s
       timeout: 3s
       retries: 20
+
+
+  dns:
+    image: coredns/coredns:latest
+    command: -conf /Corefile
+    volumes:
+      - ./docker/coredns/Corefile:/Corefile:ro
+      - ./docker/coredns/zones:/zones:ro
+    ports:
+      - "127.0.0.1:1053:53/udp"
+      - "127.0.0.1:1053:53/tcp"
+    restart: unless-stopped
+
+#  anvil:
+#    image: ghcr.io/foundry-rs/foundry:latest
+#    command: >
+#      anvil
+#      --host 0.0.0.0
+#      --port 8545
+#      --chain-id 31337
+#      --block-time 0
+#      --gas-limit 30000000
+#    ports:
+#      - "8545:8545"
+#    healthcheck:
+#      test: [ "CMD", "bash", "-lc", "cast chain-id --rpc-url http://127.0.0.1:8545 >/dev/null 2>&1" ]
+#      interval: 2s
+#      timeout: 2s
+#      retries: 30
+#
+#  forge:
+#    image: ghcr.io/foundry-rs/foundry:1.5.1
+#    working_dir: /work
+#    volumes:
+#      - ./docker/foundry/contracts:/work
+#    environment:
+#      FOUNDRY_PROFILE: docker
+#      RPC_URL: http://anvil:8545
+#    depends_on:
+#      anvil:
+#        condition: service_healthy
+#    entrypoint: [ "bash", "-lc" ]
+#    command: >
+#      forge --version &&
+#      forge test -vvv
+
 
 networks:
   default:

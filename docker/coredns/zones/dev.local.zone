@@ -1,0 +1,20 @@
+$ORIGIN dev.local.
+$TTL 60
+
+@   IN  SOA ns.dev.local. hostmaster.dev.local. (
+        2026011801 ; serial
+        3600       ; refresh
+        600        ; retry
+        604800     ; expire
+        60         ; minimum
+)
+
+    IN  NS  ns.dev.local.
+ns  IN  A   127.0.0.1
+
+@   IN  A   127.0.0.1
+node    IN  A   127.0.0.1
+
+; This matches your Go lookup host: _quantumauth.<domain>
+_quantumauth IN TXT "qa-verify=gsxS-DCNk1Ne2X3H7C-7GiOWgu5SSPNfyMU81yojzQ0"
+_quantumauth.node IN TXT "qa-verify=TY98-4GQvJPOGnTL4pi9snjij-AToOz5QhVKMcusfb8"
